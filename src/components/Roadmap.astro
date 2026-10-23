@@ -1,0 +1,248 @@
+---
+// Roadmap — the M0–M8 serial gates (left) and the live capability status
+// board (right). Milestone names are localized; M-codes and statuses are
+// machine readouts and stay fixed in both locales.
+import { getLangFromUrl, useTranslations } from "../i18n";
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+
+const milestones = [
+  { id: "m0", state: "passed" },
+  { id: "m1", state: "passed" },
+  { id: "m2", state: "passed" },
+  { id: "m3", state: "passed" },
+  { id: "m4", state: "passed" },
+  { id: "m5", state: "next" },
+  { id: "m6", state: "queued" },
+  { id: "m7", state: "queued" },
+  { id: "m8", state: "queued" },
+];
+
+const board = [
+  { key: "sandbox", led: "ok" },
+  { key: "live", led: "alert" },
+  { key: "content", led: "data" },
+  { key: "kernel", led: "power" },
+  { key: "persistence", led: "warn" },
+  { key: "pay", led: "alert" },
+  { key: "ops", led: "faint" },
+];
+---
+
+<section id="roadmap">
+  <div class="shell">
+    <span class="stencil">{t("roadmap.stencil")}</span>
+    <h2 class="h-sec">{t("roadmap.title")}</h2>
+    <p class="sub-sec">{t("roadmap.sub")}</p>
+
+    <div class="roadmap">
+      <ol class="timeline">
+        {milestones.map((m, i) => (
+          <li class={`timeline__item timeline__item--${m.state}`}>
+            <div class="timeline__rail">
+              <span class="timeline__dot" aria-hidden="true">
+                {m.state === "passed" && (
+                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2 4.8 9 10 3"/></svg>
+                )}
+              </span>
+              {i < milestones.length - 1 && <span class="timeline__line" aria-hidden="true" />}
+            </div>
+            <div class="timeline__content">
+              <div class="timeline__head">
+                <span class="timeline__name">{t(`roadmap.${m.id}.name` as any)}</span>
+                <span class={`timeline__state timeline__state--${m.state}`}>
+                  {m.state === "passed" ? t("roadmap.passed") : m.state === "next" ? t("roadmap.next") : t("roadmap.queued")}
+                </span>
+              </div>
+              <p class="timeline__desc">{t(`roadmap.${m.id}.desc` as any)}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div class="panel panel--riveted board">
+        <div class="panel__bar">
+          <span>{t("roadmap.board.title")}</span>
+          <span class="led" data-c="power" />
+        </div>
+        <ul class="board__list">
+          {board.map((b) => (
+            <li class="board__row">
+              <span class="board__led" data-c={b.led} />
+              <span class="board__name">{t(`roadmap.board.${b.key}` as any)}</span>
+              <span class={`board__value board__value--${b.led}`}>{t(`roadmap.board.${b.key}V` as any)}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="board__note">{t("roadmap.note")}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .roadmap {
+    margin-top: 44px;
+    display: grid;
+    grid-template-columns: 1.12fr 0.88fr;
+    gap: 22px;
+    align-items: start;
+  }
+
+  .timeline {
+    margin: 0;
+    padding: 4px 0;
+    list-style: none;
+  }
+  .timeline__item {
+    display: grid;
+    grid-template-columns: 26px 1fr;
+    column-gap: 16px;
+  }
+  .timeline__rail {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  .timeline__dot {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    margin-top: 4px;
+    border-radius: 50%;
+    border: 1.5px solid var(--steel-500);
+    background: var(--steel-900);
+    color: var(--steel-950);
+  }
+  .timeline__item--passed .timeline__dot {
+    background: var(--ok);
+    border-color: var(--ok);
+    box-shadow: 0 0 12px -2px var(--ok);
+  }
+  .timeline__item--next .timeline__dot {
+    background: var(--power);
+    border-color: var(--power);
+    box-shadow: 0 0 14px -1px var(--power);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 10px -2px var(--power); }
+    50% { box-shadow: 0 0 18px 0px var(--power); }
+  }
+  .timeline__line {
+    position: absolute;
+    top: 19px;
+    bottom: -10px;
+    width: 2px;
+    background: repeating-linear-gradient(
+      180deg,
+      var(--steel-500) 0 6px,
+      transparent 6px 11px
+    );
+  }
+  .timeline__item--passed .timeline__line {
+    background: var(--steel-600);
+  }
+  .timeline__content {
+    padding-bottom: 20px;
+  }
+  .timeline__item:last-child .timeline__content { padding-bottom: 0; }
+  .timeline__head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .timeline__name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .timeline__item--queued .timeline__name { color: var(--ink-dim); }
+  .timeline__state {
+    font-family: var(--mono);
+    font-size: 8.5px;
+    letter-spacing: 0.1em;
+    padding: 2px 7px;
+    border: 1px solid var(--steel-500);
+    color: var(--ink-faint);
+  }
+  .timeline__state--passed {
+    color: var(--ok);
+    border-color: var(--ok);
+  }
+  .timeline__state--next {
+    color: var(--power);
+    border-color: var(--power);
+    box-shadow: 0 0 12px -4px var(--power);
+  }
+  .timeline__desc {
+    margin-top: 6px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-dim);
+    max-width: 52ch;
+  }
+  .timeline__item--queued .timeline__desc { color: var(--ink-faint); }
+
+  .board { overflow: hidden; }
+  .board__list {
+    margin: 0;
+    padding: 12px 20px 8px;
+    list-style: none;
+  }
+  .board__row {
+    display: grid;
+    grid-template-columns: 12px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px dashed var(--steel-700);
+  }
+  .board__row:last-child { border-bottom: none; }
+  .board__led {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--steel-500);
+  }
+  .board__led[data-c="ok"] { background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+  .board__led[data-c="alert"] { background: var(--alert); box-shadow: 0 0 8px var(--alert); }
+  .board__led[data-c="data"] { background: var(--data); box-shadow: 0 0 8px var(--data); }
+  .board__led[data-c="power"] { background: var(--power); box-shadow: 0 0 8px var(--power); }
+  .board__led[data-c="warn"] { background: var(--warn); box-shadow: 0 0 8px var(--warn); }
+  .board__name {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-dim);
+  }
+  .board__value {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    color: var(--ink-faint);
+    text-align: right;
+    white-space: nowrap;
+  }
+  .board__value--ok { color: var(--ok); }
+  .board__value--alert { color: var(--alert); }
+  .board__value--data { color: var(--data); }
+  .board__value--power { color: var(--power); }
+  .board__value--warn { color: var(--warn); }
+  .board__note {
+    padding: 14px 20px 18px;
+    border-top: 1px dashed var(--steel-600);
+    font-family: var(--mono);
+    font-size: 10px;
+    line-height: 1.7;
+    color: var(--ink-faint);
+  }
+
+  @media (max-width: 920px) {
+    .roadmap { grid-template-columns: 1fr; }
+  }
+</style>
