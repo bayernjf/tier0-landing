@@ -12,8 +12,8 @@ const milestones = [
   { id: "m2", state: "passed" },
   { id: "m3", state: "passed" },
   { id: "m4", state: "passed" },
-  { id: "m5", state: "next" },
-  { id: "m6", state: "queued" },
+  { id: "m5", state: "passed" },
+  { id: "m6", state: "blocked" },
   { id: "m7", state: "queued" },
   { id: "m8", state: "queued" },
 ];
@@ -23,7 +23,8 @@ const board = [
   { key: "live", led: "alert" },
   { key: "content", led: "data" },
   { key: "kernel", led: "power" },
-  { key: "persistence", led: "warn" },
+  { key: "persistence", led: "power" },
+  { key: "deploy", led: "warn" },
   { key: "pay", led: "alert" },
   { key: "ops", led: "faint" },
 ];
@@ -44,6 +45,9 @@ const board = [
                 {m.state === "passed" && (
                   <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2 4.8 9 10 3"/></svg>
                 )}
+                {m.state === "blocked" && (
+                  <svg width="8" height="9" viewBox="0 0 10 12" fill="currentColor" aria-hidden="true"><rect x="0.5" y="0.5" width="2.6" height="11" rx="0.6"/><rect x="6.9" y="0.5" width="2.6" height="11" rx="0.6"/></svg>
+                )}
               </span>
               {i < milestones.length - 1 && <span class="timeline__line" aria-hidden="true" />}
             </div>
@@ -51,7 +55,13 @@ const board = [
               <div class="timeline__head">
                 <span class="timeline__name">{t(`roadmap.${m.id}.name` as any)}</span>
                 <span class={`timeline__state timeline__state--${m.state}`}>
-                  {m.state === "passed" ? t("roadmap.passed") : m.state === "next" ? t("roadmap.next") : t("roadmap.queued")}
+                  {m.state === "passed"
+                    ? t("roadmap.passed")
+                    : m.state === "blocked"
+                      ? t("roadmap.blocked")
+                      : m.state === "next"
+                        ? t("roadmap.next")
+                        : t("roadmap.queued")}
                 </span>
               </div>
               <p class="timeline__desc">{t(`roadmap.${m.id}.desc` as any)}</p>
@@ -133,6 +143,14 @@ const board = [
     0%, 100% { box-shadow: 0 0 10px -2px var(--power); }
     50% { box-shadow: 0 0 18px 0px var(--power); }
   }
+  .timeline__item--blocked .timeline__dot {
+    background: var(--warn);
+    border-color: var(--warn);
+    color: var(--steel-950);
+    box-shadow: 0 0 12px -2px var(--warn);
+  }
+  .timeline__item--blocked .timeline__name { color: var(--ink); }
+  .timeline__item--blocked .timeline__desc { color: var(--ink-dim); }
   .timeline__line {
     position: absolute;
     top: 19px;
@@ -179,6 +197,11 @@ const board = [
     color: var(--power);
     border-color: var(--power);
     box-shadow: 0 0 12px -4px var(--power);
+  }
+  .timeline__state--blocked {
+    color: var(--warn);
+    border-color: var(--warn);
+    box-shadow: 0 0 12px -4px var(--warn);
   }
   .timeline__desc {
     margin-top: 6px;

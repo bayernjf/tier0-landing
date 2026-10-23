@@ -9,10 +9,10 @@ export const ui = {
     "meta.title":
       "Tier 0 — the operating layer for agent-run companies, with human sign-off on what matters",
     "meta.description":
-      "An agent-native operating system for organizations and lines of business: seven modules around one shared decision kernel. Agents run execution and operations; decisions are graded D0–D3 and important ones wait for human sign-off; every record is Ed25519-sealed and replayable. Commerce is the first line of business; M0–M4 gates passed, built in public.",
+      "An agent-native operating system for organizations and lines of business: seven modules around one shared decision kernel. Agents run execution and operations; decisions are graded D0–D3 and important ones wait for human sign-off; every record is Ed25519-sealed and replayable. Commerce is the first line of business; M0–M5 gates passed and M6 local persistence and deployment artifacts are ready, with real cloud deployment and live-store access blocked on external credentials. Built in public.",
 
     // ---------- HUD ----------
-    "hud.status": "M4 GATE PASSED",
+    "hud.status": "M5 PASSED · M6 BLOCKED",
     "hud.modules": "MODULES",
     "hud.grades": "GRADES",
     "hud.milestones": "MILESTONES",
@@ -28,7 +28,7 @@ export const ui = {
     "nav.langSwitch": "中文",
 
     // ---------- Hero ----------
-    "hero.badge": "M4 GATE PASSED · BUILDING IN PUBLIC",
+    "hero.badge": "M5 GATE PASSED · M6 BLOCKED ON EXTERNALS",
     "hero.title.line1": "The operating layer for",
     "hero.title.pre": "agent-run companies, with ",
     "hero.title.accent": "human sign-off",
@@ -90,8 +90,8 @@ export const ui = {
     "modules.zeus.tag": "SHARED DECISION KERNEL",
     "modules.zeus.body":
       "Fan-out → deterministic aggregation → D0–D3 grading → human approval → audit replay. HTTP API v1, idempotent decisions, an SLA timeout state machine and versioned policy.",
-    "modules.zeus.status": "KERNEL v1 READY",
-    "modules.zeus.statusSub": "durable storage lands in M6",
+    "modules.zeus.status": "KERNEL v1 · DURABLE",
+    "modules.zeus.statusSub": "local durable storage live; cloud deployment in M6",
     "modules.card.commerce.tag": "COMMERCE · APP",
     "modules.card.commerce.name": "Commerce OS",
     "modules.card.commerce.body":
@@ -123,7 +123,7 @@ export const ui = {
       "Blueprint → Preview → Production delivery pipeline with acceptance evidence.",
     "modules.card.dev.status": "EXISTING · M5",
     "modules.footnote":
-      "Test counts are dated snapshots (zeus / Commerce OS / Loom as of 2026-10-23; the existing modules as of 2026-10-21) and are re-verified before each release. “Existing” means the module already runs standalone and is wired into the shared kernel in its scheduled milestone.",
+      "Test counts are dated snapshots (zeus / Commerce OS / Loom / Agent Dev as of 2026-10-23; the existing Agent World, Atlas and Job Agent modules as of 2026-10-21) and are re-verified before each release. “Existing” means the module already runs standalone and is wired into the shared kernel in its scheduled milestone.",
 
     // ---------- Gates ----------
     "gates.stencil": "engineering guarantees",
@@ -163,25 +163,29 @@ export const ui = {
     "roadmap.m5.name": "M5 Delivery self-bootstrap",
     "roadmap.m5.desc": "The delivery pipeline builds the system itself.",
     "roadmap.m6.name": "M6 Persistence & real deployment",
-    "roadmap.m6.desc": "Durable storage and real deployment; decisions leave in-memory.",
+    "roadmap.m6.desc":
+      "Local persistence, backup/restore and deploy artifacts are ready and rehearsed; real cloud deployment and the first live-store upsert/order pull are blocked on external credentials.",
     "roadmap.m7.name": "M7 Executor wiring",
     "roadmap.m7.desc": "Wire existing executors (Agent World, Atlas) into the kernel.",
     "roadmap.m8.name": "M8 Ops console & notifications",
     "roadmap.m8.desc": "Operations console and notifications — the minimal operable form.",
     "roadmap.passed": "GATE PASSED",
     "roadmap.next": "NEXT",
+    "roadmap.blocked": "LOCAL DONE · EXTERNAL BLOCK",
     "roadmap.queued": "QUEUED",
     "roadmap.board.title": "CURRENT STATUS BOARD",
     "roadmap.board.sandbox": "sandbox-douyin",
     "roadmap.board.sandboxV": "ONLINE · offline replay",
     "roadmap.board.live": "live channels",
-    "roadmap.board.liveV": "FAIL-CLOSED · needs credentials",
+    "roadmap.board.liveV": "FAIL-CLOSED · 422 verified",
     "roadmap.board.content": "loom content",
     "roadmap.board.contentV": "REAL MODEL · explicit switch",
     "roadmap.board.kernel": "decision kernel",
     "roadmap.board.kernelV": "HTTP v1 · 503 when down",
-    "roadmap.board.persistence": "persistence",
-    "roadmap.board.persistenceV": "IN-MEMORY · durable in M6",
+    "roadmap.board.persistence": "durable storage",
+    "roadmap.board.persistenceV": "LOCAL DURABLE · backup ready",
+    "roadmap.board.deploy": "real deployment",
+    "roadmap.board.deployV": "ARTIFACTS READY · cloud blocked",
     "roadmap.board.pay": "payment · fulfillment",
     "roadmap.board.payV": "501 PLACEHOLDER",
     "roadmap.board.ops": "ops console",
@@ -210,7 +214,7 @@ export const ui = {
       "For one-person companies and small teams. Leave your email; we will not contact you before the system is operable, and no date is promised.",
     "cta.wait.btn": "Join waitlist",
     "cta.note":
-      "Tier 0 is a working name. State as of 2026-10-23: M4 passed; the system is not operable as a business before M8 — live channels, payments, store entities and persistence are explicitly pending.",
+      "Tier 0 is a working name. State as of 2026-10-23: M0–M5 gates passed; M6 durable storage, backup and deployment artifacts are complete locally, but real cloud deployment and live-store access are blocked on external credentials and are not claimed as live. The system is not operable as a business before M8 — live channels, payments and store entities remain explicitly pending.",
 
     // ---------- Footer ----------
     "foot.tag":
@@ -223,16 +227,16 @@ export const ui = {
     "foot.nav.cta": "Contact",
     "foot.nav.privacy": "Privacy",
     "foot.nav.terms": "Terms",
-    "foot.meta": "M4 · GATE passed",
+    "foot.meta": "M5 passed · M6 blocked",
   },
 
   zh: {
     "meta.title": "Tier 0 — 公司运行的第零层：Agent 执行，人签重要决策",
     "meta.description":
-      "以 Agent 为执行主体的组织与业务运行系统：七个模块围绕一个共享决策内核。Agent 承担执行与运营，决策按 D0–D3 分级、重要的由人签核，每条记录 Ed25519 封签、可回放。电商是第一个业务切口；M0–M4 决策门已过，公开自建。",
+      "以 Agent 为执行主体的组织与业务运行系统：七个模块围绕一个共享决策内核。Agent 承担执行与运营，决策按 D0–D3 分级、重要的由人签核，每条记录 Ed25519 封签、可回放。电商是第一个业务切口；M0–M5 决策门已过，M6 本地持久化与部署工件就绪，真实云部署与店铺接入受外部凭据阻塞。公开自建。",
 
     // ---------- HUD ----------
-    "hud.status": "M4 决策门已过",
+    "hud.status": "M5 已过 · M6 阻塞",
     "hud.modules": "模块",
     "hud.grades": "分级",
     "hud.milestones": "里程碑",
@@ -248,7 +252,7 @@ export const ui = {
     "nav.langSwitch": "EN",
 
     // ---------- Hero ----------
-    "hero.badge": "M4 决策门已过 · 公开自建",
+    "hero.badge": "M5 决策门已过 · M6 受外部阻塞",
     "hero.title.line1": "公司运行的第零层：",
     "hero.title.pre": "Agent 执行，",
     "hero.title.accent": "人签重要决策",
@@ -310,8 +314,8 @@ export const ui = {
     "modules.zeus.tag": "共享决策内核",
     "modules.zeus.body":
       "并行扇出 → 确定性聚合 → D0–D3 分级 → 人工裁决 → 审计回放；HTTP API v1、幂等决策、SLA 超时状态机、版本化策略。",
-    "modules.zeus.status": "内核 v1 可用",
-    "modules.zeus.statusSub": "持久化在 M6",
+    "modules.zeus.status": "内核 v1 · 已持久化",
+    "modules.zeus.statusSub": "本地持久化已落地，上云部署在 M6",
     "modules.card.commerce.tag": "电商 · 应用",
     "modules.card.commerce.name": "Commerce OS",
     "modules.card.commerce.body":
@@ -340,7 +344,7 @@ export const ui = {
     "modules.card.dev.body": "交付管道：Blueprint → Preview → Production，带验收证据。",
     "modules.card.dev.status": "已有 · M5",
     "modules.footnote":
-      "测试数为带日期的快照（zeus / Commerce OS / Loom 为 2026-10-23 口径；已有模块为 2026-10-21 口径），每次发布前重新核验。「已有」指该模块已独立运行，并在计划里程碑中接入共享内核。",
+      "测试数为带日期的快照（zeus / Commerce OS / Loom / Agent Dev 为 2026-10-23 口径；已有的 Agent World、Atlas、Job Agent 为 2026-10-21 口径），每次发布前重新核验。「已有」指该模块已独立运行，并在计划里程碑中接入共享内核。",
 
     // ---------- Gates ----------
     "gates.stencil": "工程承诺",
@@ -378,25 +382,28 @@ export const ui = {
     "roadmap.m5.name": "M5 交付自举",
     "roadmap.m5.desc": "交付管道开始构建系统自身。",
     "roadmap.m6.name": "M6 持久化与真实部署",
-    "roadmap.m6.desc": "持久化存储与真实部署，决策离开内存。",
+    "roadmap.m6.desc": "本地持久化、备份恢复与部署工件已就绪并演练；真实云部署与首次 live 店铺 upsert/拉单受外部凭据阻塞。",
     "roadmap.m7.name": "M7 执行器接线",
     "roadmap.m7.desc": "把已有执行器（Agent World、Atlas）接进内核。",
     "roadmap.m8.name": "M8 运营控制台与通知",
     "roadmap.m8.desc": "运营控制台与通知——最小可运营形态。",
     "roadmap.passed": "门已过",
     "roadmap.next": "下一程",
+    "roadmap.blocked": "本地完成 · 外部阻塞",
     "roadmap.queued": "排队中",
     "roadmap.board.title": "当前状态板",
     "roadmap.board.sandbox": "沙箱抖音",
     "roadmap.board.sandboxV": "在线 · 离线回放",
     "roadmap.board.live": "live 通道",
-    "roadmap.board.liveV": "熔断中 · 待资质",
+    "roadmap.board.liveV": "熔断 · 422 已验证",
     "roadmap.board.content": "loom 内容",
     "roadmap.board.contentV": "真实模型 · 显式开关",
     "roadmap.board.kernel": "决策内核",
     "roadmap.board.kernelV": "HTTP v1 · 不可达 503",
-    "roadmap.board.persistence": "持久化",
-    "roadmap.board.persistenceV": "内存中 · M6 持久化",
+    "roadmap.board.persistence": "持久化存储",
+    "roadmap.board.persistenceV": "本地持久化 · 备份就绪",
+    "roadmap.board.deploy": "现网部署",
+    "roadmap.board.deployV": "工件就绪 · 云部署阻塞",
     "roadmap.board.pay": "支付 · 履约",
     "roadmap.board.payV": "501 占位",
     "roadmap.board.ops": "运营控制台",
@@ -423,7 +430,7 @@ export const ui = {
       "面向一个人公司与小企业。留下邮箱即可；系统可运营前不打扰，不承诺时间。",
     "cta.wait.btn": "登记 waitlist",
     "cta.note":
-      "Tier 0 为工作名。2026-10-23 口径：M4 已过；M8 之前不构成可运营业务——live 通道、支付、店铺主体与持久化均为明确待办。",
+      "Tier 0 为工作名。2026-10-23 口径：M0–M5 决策门已过；M6 的持久化存储、备份与部署工件本地已完成，但真实云部署与店铺接入受外部凭据阻塞，不冒充已上线。M8 之前不构成可运营业务——live 通道、支付与店铺主体仍为明确待办。",
 
     // ---------- Footer ----------
     "foot.tag": "Agent 运行公司，人签重要决策——每条决策都封签、可回放。",
@@ -435,6 +442,6 @@ export const ui = {
     "foot.nav.cta": "合作",
     "foot.nav.privacy": "隐私",
     "foot.nav.terms": "条款",
-    "foot.meta": "M4 · 决策门已过",
+    "foot.meta": "M5 已过 · M6 阻塞",
   },
 } as const;

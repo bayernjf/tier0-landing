@@ -11,8 +11,10 @@
 
 - Site: https://tier0.bayjf.com (English) · https://tier0.bayjf.com/zh/ (简体中文)
 - Site source: https://github.com/bayernjf/tier0-landing
-- Status: M0–M4 gates passed (as of 2026-10-23); not operable as a business before M8.
-  Built in public.
+- Status: M0–M5 gates passed (as of 2026-10-23). M6 durable storage, backup/restore and
+  deployment artifacts are complete and rehearsed locally; real cloud deployment and the
+  first live-store upsert/order pull are blocked on external credentials and are not claimed
+  as live. Not operable as a business before M8. Built in public.
 
 ## Seven modules in three layers
 
@@ -34,9 +36,10 @@ Platform layer (shared capabilities):
 Kernel layer (the operating core):
 6. **zeus** — the shared decision kernel: fan-out → deterministic aggregation → D0–D3
    grading → human approval → audit replay; HTTP API v1, idempotent decisions, an SLA
-   timeout state machine, versioned policy; kernel v1 ready, durable storage in M6.
+   timeout state machine, versioned policy; kernel v1 is durably stored locally (7 tables,
+   backup/restore tested); real cloud deployment is the remaining M6 step.
 7. **Agent Dev** — the delivery pipeline: Blueprint → Preview → Production with
-   acceptance evidence (existing; self-bootstrap in M5).
+   acceptance evidence (M5 self-bootstrap passed).
 
 ## Three operating principles
 
@@ -72,8 +75,10 @@ execute only after human approval.
 - M2 Organization v1 (passed)
 - M3 Commerce minimal loop (passed)
 - M4 Content base & commerce content (passed)
-- M5 Delivery self-bootstrap (next)
-- M6 Persistence & real deployment
+- M5 Delivery self-bootstrap (passed, self-bootstrap side)
+- M6 Persistence & real deployment (local persistence, backup/restore and deploy artifacts
+  done and rehearsed; real cloud deployment and live-store access blocked on external
+  credentials — gate not passed)
 - M7 Executor wiring (Agent World, Atlas)
 - M8 Ops console & notifications — the minimal operable form
 
@@ -81,10 +86,11 @@ A gate opens only when its acceptance is verified end to end; nothing is claimed
 
 ## Current status board (2026-10-23)
 
-sandbox-douyin ONLINE (offline replay); live channels FAIL-CLOSED (need credentials and
-qualifications); loom content on REAL MODEL (explicit switch); decision kernel HTTP v1
-(503 when unreachable); persistence IN-MEMORY (durable in M6); payment · fulfillment 501
-placeholder; ops console PLANNED (M8).
+sandbox-douyin ONLINE (offline replay); live channels FAIL-CLOSED (the missing-credential
+422 path is verified; real store access awaits credentials and qualifications); loom content
+on REAL MODEL (explicit switch); decision kernel HTTP v1 (503 when unreachable); durable
+storage LOCAL DURABLE with backup/restore ready; real deployment ARTIFACTS READY but cloud
+blocked; payment · fulfillment 501 placeholder; ops console PLANNED (M8).
 
 ## Partnerships
 

@@ -77,11 +77,14 @@ src/styles/        global.css
 
 ## 事实口径
 
-- 测试数是带日期快照：zeus / Commerce OS / Loom 为 2026-10-23 口径，已有模块为
-  2026-10-21 口径；发布前应在对应产品仓实跑复核。
-- 里程碑状态：M0–M4 已过，M5 为下一程，M6–M8 排队；不公布日期。
-- 能力状态：sandbox-douyin 在线（离线回放）、live 通道熔断、loom 真实模型显式开关、
-  支付/履约 501、持久化在内存、运营控制台规划中。
+- 测试数是带日期快照：zeus / Commerce OS / Loom / Agent Dev 为 2026-10-23 口径
+  （zeus 2227 / commerce 74 / loom 1481 / agent-dev 535），已有 Agent World / Atlas /
+  Job Agent 为 2026-10-21 口径；发布前应在对应产品仓实跑复核。
+- 里程碑状态：M0–M5 已过；M6 本地持久化/备份/部署工件完成并演练，但真实云部署与
+  live 店铺接入受外部凭据阻塞、GATE-M6 未完整过门；M7–M8 排队；不公布日期。
+- 能力状态：sandbox-douyin 在线（离线回放）、live 通道缺凭据 422 已验证（熔断）、
+  loom 真实模型显式开关、决策内核 HTTP v1（不可达 503）、持久化已本地落地且备份就绪、
+  现网部署工件就绪但云阻塞、支付/履约 501、运营控制台规划中。
 
 ## 部署到 Cloudflare Pages（Git 集成）
 
