@@ -1,0 +1,291 @@
+---
+// ArchitectureDiagram — the Tier 0 family map: three stacked layers
+// (applications / platform / kernel), calls flowing down toward the kernel,
+// and two cross-cutting rails (the zeus decision kernel and the audit chain).
+// Human labels are localized; mono tags, grade codes and error codes are
+// machine readouts and stay fixed in both locales.
+import { getLangFromUrl, useTranslations } from "../i18n";
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+
+const layers = [
+  {
+    key: "app",
+    label: t("arch.layer.app"),
+    sub: t("arch.layer.appSub"),
+    blocks: [
+      { tag: "COMMERCE OS", name: t("arch.m.commerce") },
+      { tag: "LOOM", name: t("arch.m.loom") },
+      { tag: "JOB AGENT", name: t("arch.m.job") },
+    ],
+  },
+  {
+    key: "platform",
+    label: t("arch.layer.platform"),
+    sub: t("arch.layer.platformSub"),
+    blocks: [
+      { tag: "AGENT WORLD", name: t("arch.m.world") },
+      { tag: "ATLAS", name: t("arch.m.atlas") },
+    ],
+  },
+  {
+    key: "kernel",
+    label: t("arch.layer.kernel"),
+    sub: t("arch.layer.kernelSub"),
+    blocks: [
+      { tag: "ZEUS", name: t("arch.m.zeus"), core: true },
+      { tag: "AGENT DEV", name: t("arch.m.dev") },
+    ],
+  },
+];
+---
+
+<div class="arch">
+  <div class="arch__layers">
+    {layers.map((layer, i) => (
+      <div class="arch__layer-wrap">
+        <div class={`arch__layer arch__layer--${layer.key}`}>
+          <div class="arch__layer-head">
+            <span class="arch__layer-led" data-c={layer.key === "kernel" ? "power" : "data"} />
+            <span class="arch__layer-label">{layer.label}</span>
+            <span class="arch__layer-sub">{layer.sub}</span>
+          </div>
+          <div class="arch__blocks">
+            {layer.blocks.map((b) => (
+              <div class={`arch__block${b.core ? " arch__block--core" : ""}`}>
+                <span class="arch__block-tag">{b.tag}</span>
+                <span class="arch__block-name">{b.name}</span>
+                <span class="arch__block-pip" aria-hidden="true" />
+              </div>
+            ))}
+          </div>
+        </div>
+        {i < layers.length - 1 && (
+          <svg class="arch__down" width="16" height="18" viewBox="0 0 16 18" fill="none" aria-hidden="true">
+            <path d="M8 0v14m-5-5 5 5 5-5" stroke="var(--data)" stroke-width="1.5" />
+          </svg>
+        )}
+      </div>
+    ))}
+  </div>
+
+  <div class="arch__bottom">
+    <div class="arch__rail">
+      <div class="arch__rail-head">
+        <span class="led" data-c="power" aria-hidden="true" />
+        <span class="arch__rail-title">{t("arch.rail.zeus")}</span>
+        <span class="arch__rail-sub">{t("arch.rail.zeusSub")}</span>
+      </div>
+      <div class="arch__codes">
+        <div class="arch__code"><i class="dot" data-c="power" /><code>D0 auto · D1 async · D2 sync · D3 blocked</code></div>
+        <div class="arch__code"><i class="dot" data-c="power" /><code>D2/D3 action&nbsp;&nbsp;HELD 423 → human approval → execute</code></div>
+        <div class="arch__code"><i class="dot" data-c="alert" /><code>kernel unreachable&nbsp;&nbsp;503 DECISION_UNAVAILABLE</code></div>
+      </div>
+    </div>
+
+    <div class="arch__rail">
+      <div class="arch__rail-head">
+        <span class="led" data-c="data" aria-hidden="true" />
+        <span class="arch__rail-title">{t("arch.rail.audit")}</span>
+        <span class="arch__rail-sub">{t("arch.rail.auditSub")}</span>
+      </div>
+      <div class="arch__codes">
+        <div class="arch__code"><i class="dot" data-c="data" /><code>seal = seq + prevHash + keyId + payload · Ed25519</code></div>
+        <div class="arch__code"><i class="dot" data-c="data" /><code>verify() replays every record on boot</code></div>
+        <div class="arch__code"><i class="dot" data-c="alert" /><code>tamper / delete / reorder&nbsp;&nbsp;→ REJECTED</code></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .arch {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .arch__layers {
+    display: flex;
+    flex-direction: column;
+  }
+  .arch__layer-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .arch__layer {
+    width: 100%;
+    border: 1px solid var(--steel-600);
+    background: var(--steel-900);
+    box-shadow: var(--bevel-deep);
+  }
+  .arch__layer-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    border-bottom: 1px dashed var(--steel-600);
+  }
+  .arch__layer-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--ink);
+  }
+  .arch__layer-sub {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--ink-faint);
+  }
+  .arch__layer-led {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--data);
+    box-shadow: 0 0 8px var(--data);
+  }
+  .arch__layer-led[data-c="power"] { background: var(--power); box-shadow: 0 0 8px var(--power); }
+  .arch__layer--app { border-top: 2px solid var(--data); }
+  .arch__layer--platform { border-top: 2px solid color-mix(in srgb, var(--data) 55%, var(--steel-500)); }
+  .arch__layer--kernel { border-top: 2px solid var(--power); }
+
+  .arch__blocks {
+    display: flex;
+    gap: 10px;
+    padding: 10px 12px 12px;
+  }
+  .arch__block {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 13px 12px 11px;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--steel-800), var(--steel-850));
+    border: 1px solid var(--steel-600);
+    box-shadow: var(--bevel);
+  }
+  .arch__block--core {
+    border-color: var(--power-dim);
+    background:
+      radial-gradient(ellipse 90% 120% at 50% 0%, rgba(255, 176, 32, 0.08), transparent 70%),
+      linear-gradient(180deg, var(--steel-800), var(--steel-850));
+  }
+  .arch__block-tag {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    color: var(--data);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .arch__block--core .arch__block-tag { color: var(--power); }
+  .arch__block-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .arch__block-pip {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 38%;
+    background: var(--data);
+    box-shadow: 0 0 8px var(--data);
+    opacity: 0.55;
+    animation: arch-sweep 3.6s linear infinite;
+  }
+  .arch__block--core .arch__block-pip { background: var(--power); box-shadow: 0 0 8px var(--power); }
+  @keyframes arch-sweep {
+    0% { left: 0; opacity: 0; }
+    15% { opacity: 0.8; }
+    85% { opacity: 0.8; }
+    100% { left: 62%; opacity: 0; }
+  }
+  .arch__down {
+    flex: none;
+    margin: 1px 0;
+  }
+
+  .arch__bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .arch__rail {
+    border: 1px solid var(--steel-600);
+    background: var(--steel-900);
+    box-shadow: var(--bevel-deep);
+  }
+  .arch__rail-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-bottom: 1px dashed var(--steel-600);
+  }
+  .arch__rail-title {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .arch__rail-sub {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+  .arch__codes {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 9px 12px 10px;
+  }
+  .arch__code {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .arch__code code {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .arch__code .dot {
+    flex: none;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--data);
+    box-shadow: 0 0 8px currentColor;
+    color: var(--data);
+  }
+  .arch__code .dot[data-c="power"] { background: var(--power); color: var(--power); }
+  .arch__code .dot[data-c="alert"] { background: var(--alert); color: var(--alert); }
+
+  @media (max-width: 920px) {
+    .arch__blocks {
+      display: flex;
+      overflow-x: auto;
+      padding-bottom: 12px;
+    }
+    .arch__block {
+      flex: none;
+      width: 138px;
+    }
+    .arch__bottom {
+      grid-template-columns: 1fr;
+    }
+    .arch__rail-sub { display: none; }
+  }
+</style>
