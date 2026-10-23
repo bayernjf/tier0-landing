@@ -1,0 +1,105 @@
+# Tier 0
+
+> The operating layer for agent-run companies, with human sign-off on what matters.
+> Tier 0 is an agent-native operating system for organizations and their lines of
+> business: seven modules around one shared decision kernel (zeus). Agents carry
+> execution, processes and daily operations; decisions are graded D0–D3 by importance
+> and important ones wait for human sign-off; every record is Ed25519-sealed per-record
+> and replayable. Commerce is the first line of business; common capability settles into
+> a shared kernel, business-specific capability stays in applications, and the stack
+> replicates to whatever comes next.
+
+- Site: https://tier0.bayjf.com (English) · https://tier0.bayjf.com/zh/ (简体中文)
+- Site source: https://github.com/bayernjf/tier0-landing
+- Status: M0–M4 gates passed (as of 2026-10-23); not operable as a business before M8.
+  Built in public.
+
+## Seven modules in three layers
+
+Application layer (lines of business):
+1. **Commerce OS** — the minimal commerce loop: product, content, gated listing, order
+   pullback, refunds and customer service behind a pluggable ChannelAdapter; today an
+   offline sandbox end to end; payment/fulfillment return 501.
+2. **Loom** — the content base: a 13-stage content chain and candidate review; real model
+   output fires only behind an explicit switch.
+3. **Job Agent** — capability profiles for recruiting, consumer and business sides
+   (existing; kernel wiring scheduled).
+
+Platform layer (shared capabilities):
+4. **Agent World** — the quality-gate pipeline: canvases, cost and quality metering,
+   bidirectional MCP (existing; wired in M7).
+5. **Atlas** — business-entity orchestration: NL-to-canvas, three approval channels,
+   compliance, shadow canary and evolution gating (existing; wired in M7).
+
+Kernel layer (the operating core):
+6. **zeus** — the shared decision kernel: fan-out → deterministic aggregation → D0–D3
+   grading → human approval → audit replay; HTTP API v1, idempotent decisions, an SLA
+   timeout state machine, versioned policy; kernel v1 ready, durable storage in M6.
+7. **Agent Dev** — the delivery pipeline: Blueprint → Preview → Production with
+   acceptance evidence (existing; self-bootstrap in M5).
+
+## Three operating principles
+
+- **Agent-first**: agents carry execution, processes and daily operations; people are not
+  in the execution loop.
+- **Human sign-off**: decisions are graded D0–D3 with configurable thresholds; what counts
+  as important enough for a person is set by the person.
+- **Sealed and replayable**: every decision record is Ed25519-sealed per-record and
+  replayable; tampering, deletion or reordering fails closed.
+
+## Decision grades D0–D3
+
+D0 auto; D1 async approval; D2 sync approval (money actions such as refunds); D3 blocked
+(external actions such as publishing a listing). D2/D3 first return 423 DECISION_HELD and
+execute only after human approval.
+
+## Four engineering guarantees
+
+- **Configurable grades**: thresholds are configurable; past decisions keep their
+  policyVersion forever and are never rewritten.
+- **Fail-closed by default**: an unregistered channel, a missing credential or an
+  unreachable decision kernel is a refusal or 503, never a downgrade to local guessing.
+- **Per-record seals**: each record is Ed25519-sealed as seq + prevHash + keyId + payload;
+  verification recomputes the whole chain; deletion, reorder or forgery fails closed.
+- **No auto commitment**: refund, compensation and promise intents are graded first; D2 and
+  above always escalate to a human; a held decision never emits a customer-facing agent
+  message.
+
+## Milestones (serial M0→M8, no dates published)
+
+- M0 Baseline locked (passed)
+- M1 Decision kernel zeus (passed)
+- M2 Organization v1 (passed)
+- M3 Commerce minimal loop (passed)
+- M4 Content base & commerce content (passed)
+- M5 Delivery self-bootstrap (next)
+- M6 Persistence & real deployment
+- M7 Executor wiring (Agent World, Atlas)
+- M8 Ops console & notifications — the minimal operable form
+
+A gate opens only when its acceptance is verified end to end; nothing is claimed early.
+
+## Current status board (2026-10-23)
+
+sandbox-douyin ONLINE (offline replay); live channels FAIL-CLOSED (need credentials and
+qualifications); loom content on REAL MODEL (explicit switch); decision kernel HTTP v1
+(503 when unreachable); persistence IN-MEMORY (durable in M6); payment · fulfillment 501
+placeholder; ops console PLANNED (M8).
+
+## Partnerships
+
+Self-operated and self-funded first; the fastest path to a real store runs through
+partnerships. Looking for: e-commerce platforms and store channels (Douyin e-commerce
+sandbox and formal qualifications first), model and cloud infrastructure, payment channels
+and store-entity qualifications. We can provide: the ChannelAdapter five-method contract
+plus a sandbox adapter, the decision service HTTP API v1 (idempotency, approval, replay,
+audit), and a live-demoable end-to-end sandbox commerce loop. Contact via the mailto link on
+the site.
+
+## Explicitly not in scope (for now)
+
+- No launch dates, no pricing, no sign-up, no shipping commitments.
+- No live channels, payments or store entities: they require qualifications, credentials
+  and a payments entity.
+- No hosted service: Tier 0 is a systems effort and open interfaces, not a SaaS.
+- "Tier 0" is a working name; the formal umbrella brand is pending.
