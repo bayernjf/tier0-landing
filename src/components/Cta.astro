@@ -1,0 +1,208 @@
+---
+// Cta — partner entry (channels / models / cloud / payments) plus a
+// no-commitment waitlist. Both buttons are mailto links; there is no form.
+import { getLangFromUrl, useTranslations } from "../i18n";
+import { CONTACT } from "../consts";
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+
+const looking = ["cta.look.1", "cta.look.2", "cta.look.3"] as const;
+const bring = ["cta.bring.1", "cta.bring.2", "cta.bring.3"] as const;
+---
+
+<section id="cta">
+  <div class="shell">
+    <div class="panel panel--riveted cta">
+      <div class="panel__bar">
+        <span>{t("cta.bar")}</span>
+        <span class="led" data-c="power" />
+      </div>
+      <div class="cta__body">
+        <div class="cta__copy">
+          <span class="eyebrow">{t("cta.eyebrow")}</span>
+          <h2 class="cta__title">{t("cta.title")}</h2>
+          <p class="cta__sub">{t("cta.sub")}</p>
+
+          <div class="cta__cols">
+            <div class="cta__block">
+              <h3 class="cta__block-title">{t("cta.look.title")}</h3>
+              <ul class="cta__list">
+                {looking.map((k) => <li>{t(k)}</li>)}
+              </ul>
+            </div>
+            <div class="cta__block">
+              <h3 class="cta__block-title">{t("cta.bring.title")}</h3>
+              <ul class="cta__list cta__list--data">
+                {bring.map((k) => <li>{t(k)}</li>)}
+              </ul>
+            </div>
+          </div>
+
+          <div class="cta__actions">
+            <a class="btn" href={CONTACT.partner}>
+              {t("cta.partner")}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <aside class="waitpanel">
+          <div class="waitpanel__bar">
+            <span class="waitpanel__dots"><i></i><i></i><i></i></span>
+            <span class="waitpanel__title">{t("cta.wait.title")}</span>
+          </div>
+          <div class="waitpanel__body">
+            <p class="waitpanel__text">{t("cta.wait.body")}</p>
+            <a class="btn btn--ghost waitpanel__btn" href={CONTACT.waitlist}>
+              {t("cta.wait.btn")}
+            </a>
+            <p class="waitpanel__readout">mailto · no form · no list sold</p>
+          </div>
+        </aside>
+      </div>
+      <p class="cta__note">{t("cta.note")}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta { overflow: hidden; }
+  .cta__body {
+    display: grid;
+    grid-template-columns: 1.12fr 0.88fr;
+    gap: 40px;
+    padding: 38px 40px 32px;
+    min-width: 0;
+  }
+  .cta__body > * { min-width: 0; }
+  .cta__title {
+    margin-top: 12px;
+    font-size: clamp(24px, 3vw, 32px);
+  }
+  .cta__sub {
+    margin-top: 16px;
+    max-width: 58ch;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink-dim);
+  }
+  .cta__cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 26px;
+    margin-top: 24px;
+  }
+  .cta__block-title {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    color: var(--power);
+  }
+  .cta__list {
+    margin: 13px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .cta__list li {
+    position: relative;
+    padding-left: 20px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-dim);
+  }
+  .cta__list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 8px;
+    height: 8px;
+    background: var(--power);
+    box-shadow: 0 0 8px var(--power);
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  }
+  .cta__list--data li::before {
+    background: var(--data);
+    box-shadow: 0 0 8px var(--data);
+  }
+  .cta__actions { margin-top: 28px; }
+
+  .waitpanel {
+    align-self: center;
+    border: 1px solid var(--steel-600);
+    background: var(--steel-950);
+    box-shadow: var(--bevel-deep), 0 18px 40px -18px rgba(0, 0, 0, 0.9);
+  }
+  .waitpanel__bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--steel-700);
+    background: var(--steel-850);
+  }
+  .waitpanel__dots {
+    display: inline-flex;
+    gap: 6px;
+  }
+  .waitpanel__dots i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--steel-600);
+  }
+  .waitpanel__dots i:first-child { background: var(--alert); }
+  .waitpanel__dots i:nth-child(2) { background: var(--power); }
+  .waitpanel__dots i:nth-child(3) { background: var(--ok); }
+  .waitpanel__title {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    color: var(--ink);
+  }
+  .waitpanel__body {
+    padding: 22px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .waitpanel__text {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--ink-dim);
+  }
+  .waitpanel__btn {
+    justify-content: center;
+    width: 100%;
+  }
+  .waitpanel__readout {
+    margin: 0;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+  }
+  .cta__note {
+    padding: 0 40px 26px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    line-height: 1.7;
+    color: var(--ink-faint);
+  }
+
+  @media (max-width: 920px) {
+    .cta__body {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      padding: 26px 22px 24px;
+    }
+    .cta__note { padding: 0 22px 22px; }
+  }
+  @media (max-width: 560px) {
+    .cta__cols { grid-template-columns: 1fr; gap: 20px; }
+  }
+</style>
