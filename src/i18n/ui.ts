@@ -89,7 +89,8 @@ export const ui = {
       "Common capability settles into the kernel and platform layers; business-specific capability lives in the applications. Every layer calls the same zeus kernel for important decisions, so sign-off and audit guarantees are identical no matter which business runs on top.",
     "modules.zeus.tag": "SHARED DECISION KERNEL",
     "modules.zeus.body":
-      "Fan-out → deterministic aggregation → D0–D3 grading → human approval → audit replay. HTTP API v1, idempotent decisions, an SLA timeout state machine and versioned policy.",
+      "Fan-out → deterministic aggregation → D0–D3 grading → human approval → audit replay. HTTP API v1, idempotent decisions, an SLA timeout state machine and versioned policy. The same kernel also runs as a personal assistant — a personal Realm with memory — pluggable read-only into Claude Desktop / Cursor over stdio MCP.",
+    "modules.zeus.personalChip": "personal MCP · read-only",
     "modules.zeus.status": "KERNEL v1 · DURABLE",
     "modules.zeus.statusSub": "local durable storage live; cloud deployment in M6",
     "modules.card.commerce.tag": "COMMERCE · APP",
@@ -313,7 +314,8 @@ export const ui = {
       "通用能力沉淀在内核与平台层，业务特异能力留在应用层。任何一层遇到重要决策都调用同一个 zeus 内核，无论上层跑什么业务，签核与审计保证完全一致。",
     "modules.zeus.tag": "共享决策内核",
     "modules.zeus.body":
-      "并行扇出 → 确定性聚合 → D0–D3 分级 → 人工裁决 → 审计回放；HTTP API v1、幂等决策、SLA 超时状态机、版本化策略。",
+      "并行扇出 → 确定性聚合 → D0–D3 分级 → 人工裁决 → 审计回放；HTTP API v1、幂等决策、SLA 超时状态机、版本化策略。同一内核还有个人助理形态：带记忆的个人 Realm，可经 stdio MCP 一键、只读接入 Claude Desktop / Cursor。",
+    "modules.zeus.personalChip": "个人 MCP · 只读",
     "modules.zeus.status": "内核 v1 · 已持久化",
     "modules.zeus.statusSub": "本地持久化已落地，上云部署在 M6",
     "modules.card.commerce.tag": "电商 · 应用",
