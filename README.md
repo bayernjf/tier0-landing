@@ -88,6 +88,10 @@ src/styles/        global.css
 
 ## 部署到 Cloudflare Pages（Git 集成）
 
+**现状（2026-11-04）：未上线。** 尚无 Cloudflare Pages 项目、无 CNAME，
+`tier0-landing.pages.dev` 与 `tier0.bayjf.com` 均未解析（NXDOMAIN）。以下为
+待上线时的配置步骤，完成前不得对外宣称站点已在线。
+
 - Production branch：`main`
 - Build command：`npx playwright install chromium && npm run build`
 - Build output directory：`dist`
